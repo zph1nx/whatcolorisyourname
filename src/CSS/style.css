@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Aeonik';
-    src: url(../Media/Fonts/Aeonik-Regular.otf);
+    src: url(./fonts/Aeonik/Aeonik-Regular.otf);
 }
 
 * {
