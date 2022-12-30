@@ -61,9 +61,16 @@ $(document).ready(function() {
     // Eventlistener for the string input Field, triggers on input
     $('#strInput').on('input', function() {
         const strInputVal = $('#strInput').val();
-        const strColor = (strInputVal.length > 0 ? getStringColor(strInputVal.toLowerCase()) : '#ffffff');
 
-        $('body').css('background-color', strColor);
-        $('#colorHexStr').text(strColor.toUpperCase());
+        if(Bunny.is_egg(strInputVal)){
+            Bunny.do_egg();
+        }
+        else{
+            const strColor = (strInputVal.length > 0 ? getStringColor(strInputVal.toLowerCase()) : '#ffffff');
+
+            $('body').css('background-color', strColor);
+            $('#colorHexStr').text(strColor.toUpperCase());
+        }
+        
     })
 });
