@@ -30,7 +30,8 @@ header {
     justify-content: center;
 
     height: fit-content;
-    width: fit-content;
+    width: 100%;
+    
 }
 
 
@@ -82,7 +83,7 @@ footer {
 }
 
 footer > #developerCollabTagline {
-    color: rgb(95, 95, 95);
+    color: rgb(55, 55, 55);
     font-weight: bold;
     font-style: italic;
     font-size: medium;
