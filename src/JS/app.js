@@ -68,7 +68,7 @@ $(document).ready(function() {
         const strInputVal = $('#strInput').val();
         const strColor = (strInputVal.length > 0 ? getStringColor(strInputVal.toLowerCase()) : '#ffffff');
 
-        $('#strColor').css('background-color', strColor);
+        $('body').css('background-color', strColor);
         $('#colorHexStr').text(strColor.toUpperCase());
     })
 });
