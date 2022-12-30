@@ -62,7 +62,7 @@ main > #strInput:focus {
 }
 
 main > #colorHexStr {
-    margin-top: 80px;
+    margin-top: 10vh;
     font-size: 20px;
     color: black;
 }
@@ -73,10 +73,10 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
     height: fit-content;
-    margin-bottom: 1vh;
+    margin-bottom: 2vh;
 
     z-index: 99;
 }
@@ -84,16 +84,13 @@ footer {
 footer > #developerCollabTagline {
     color: rgb(95, 95, 95);
     font-weight: bold;
+    font-style: italic;
+    font-size: medium;
 }
 
 footer > #developerCollabText {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 9%;
-    height: 100%;
+    font-size: large;
+    margin-bottom: 1vh;
 }
 
 footer > #developerCollabText > .developerName {
@@ -103,7 +100,7 @@ footer > #developerCollabText > .developerName {
 
 footer > #appVersionText {
     font-weight: light;
-    font-style: italic;
+    font-size: medium;
 }
 
 a {
@@ -119,7 +116,7 @@ a:hover {
 
 @media only screen and (max-width: 800px) {
     main > #colorHexStr {
-        margin-top: 40px;
+        margin-top: 3vh;
         font-size: 16px;
     }
     
@@ -129,5 +126,17 @@ a:hover {
         padding: 0;
         width: 90%;
         font-size: 32px;
+    }
+
+    footer > #developerCollabText {
+        font-size: small;
+    }
+
+    footer > #developerCollabTagline {
+        font-size: smaller;
+    }
+
+    footer > #appVersionText {
+        font-size: smaller;
     }
 }
