@@ -73,16 +73,31 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
     height: fit-content;
-    margin-bottom: 2vh;
+    margin-bottom: 1vh;
 
     z-index: 99;
 }
 
-footer > #developerCollabText {
+footer > #developerCollabTagline {
+    color: rgb(95, 95, 95);
     font-weight: bold;
+}
+
+footer > #developerCollabText {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 9%;
+    height: 100%;
+}
+
+footer > #developerCollabText > .developerName {
+    font-weight: bolder;
     font-style: normal;
 }
 
