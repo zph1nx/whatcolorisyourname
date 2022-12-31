@@ -107,7 +107,7 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 const url_str = Bunny.eggs.clown.get_url_str();
 
                 (function(){
-                    const j = $.getJSON(url_str,{format: "json"})
+                    $.getJSON(url_str,{format: "json"})
                         .done(function(joke){
                             var jokeEggContainer = $("<div id=\"joke_egg_container\"></div>");
 
@@ -124,21 +124,19 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
 
                             if(joke.type === "single"){
                                 var joke_text = $('<text class="joke_egg"></text>');
-                                joke_text.text(`\"${joke.joke}\"`);
+                                joke_text.text(`${joke.joke}`);
                                 $('#joke_egg_container').append(joke_text);
                             }
                             else if(joke.type === "twopart") {
                                 var joke_setup = $('<text class="joke_egg"></text>');
                                 var joke_delivery = $('<text class="joke_egg"></text>');
 
-                                joke_setup.text(`\"${joke.setup}\"`);
-                                joke_delivery.text(`\"${joke.delivery}\"`);
+                                joke_setup.text(`${joke.setup}`);
+                                joke_delivery.text(`${joke.delivery}`);
 
                                 $('#joke_egg_container').append(joke_setup, $('<br>'), joke_delivery);
                             }
                         })
-
-                    return j;
                 })()
             },
             remove_joke: () => {
