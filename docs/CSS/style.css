@@ -68,7 +68,40 @@ main > #colorHexStr {
     color: black;
 }
 
+@keyframes spawn_joke {
+    from {
+        transform: scale(0.25);
+        font-size: 2px;
+    }
+    to {
+        transform: scale(1);
+        font-size: 16px;
+    }
+}
 
+main > #joke_egg_container {
+    min-width: fit-content;
+    max-width: 40vw;
+    height: fit-content;
+    color: white;
+    background-color: black;
+    padding: 1vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    word-wrap: break-word;
+    animation: spawn_joke 0.2s 1 linear;
+}
+
+main > #joke_egg_container > .joke_egg {
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    word-wrap: break-word;
+    font-style: italic;
+}
 
 footer {
     display: flex;
@@ -119,6 +152,15 @@ a:hover {
     main > #colorHexStr {
         margin-top: 3vh;
         font-size: 16px;
+    }
+
+    main > #joke_egg_container {
+        min-width: fit-content;
+        max-width: 60vw;
+    }
+
+    main > #joke_egg_container > .joke_egg {
+        font-size: 12px;
     }
     
     main > #strInput,
