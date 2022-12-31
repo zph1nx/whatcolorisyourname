@@ -11,6 +11,7 @@
   - [Libraries](#libraries)
 - [Easter Eggs](#easter-eggs)
   - ["reverse"](#reverse)
+  - ["clown"](#clown)
 
 ## About
 
@@ -27,3 +28,5 @@
 ## Easter Eggs
 
 ### "reverse"
+
+### "clown"
