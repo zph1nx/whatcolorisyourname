@@ -75,13 +75,13 @@ main > #colorHexStr {
     }
     to {
         transform: scale(1);
-        font-size: 16px;
+        font-size: 20px;
     }
 }
 
 main > #joke_egg_container {
     min-width: fit-content;
-    max-width: 40vw;
+    max-width: 30vw;
     height: fit-content;
     color: white;
     background-color: black;
@@ -96,11 +96,13 @@ main > #joke_egg_container {
 }
 
 main > #joke_egg_container > .joke_egg {
-    font-size: 16px;
+    font-size: 20px;
     color: white;
     text-align: center;
     word-wrap: break-word;
     font-style: italic;
+    width: 100%;
+    height: fit-content;
 }
 
 footer {
@@ -156,11 +158,11 @@ a:hover {
 
     main > #joke_egg_container {
         min-width: fit-content;
-        max-width: 60vw;
+        max-width: 50vw;
     }
 
     main > #joke_egg_container > .joke_egg {
-        font-size: 12px;
+        font-size: 16px;
     }
     
     main > #strInput,
