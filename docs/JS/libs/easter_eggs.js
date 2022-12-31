@@ -12,6 +12,7 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
         /* 
             HOW TO DEFINE EASTER-EGGS:
             "<easter-egg string>": {
+                <(optional) any easter-egg intern function>: (<parameters>) => {},
                 exec: () => {
                     <easter-egg code>
                 },
@@ -49,6 +50,115 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 $('body').css('background-color', '#ffffff');
                 $('#colorHexStr').text("#FFFFFF");
             } 
+        },
+        "clown": {
+            joke_config: {
+                type: {
+                    "single": true,
+                    "twopart": true
+                },
+                blacklist: {
+                    "nsfw": false,
+                    "religious": false,
+                    "political": false,
+                    "racist": true,
+                    "sexist": true,
+                    "explicit": true
+                }
+            },
+            get_url_str: () => {
+                var url_str = "https://v2.jokeapi.dev/joke/Any";
+                const blacklisted_flags = [];
+                const joke_types = [];
+
+                for(const [key, value] of Object.entries(Bunny.eggs.clown.joke_config.type)){
+                    if(value){
+                        joke_types.push(key);
+                    }
+                }
+
+                for(const [key, value] of Object.entries(Bunny.eggs.clown.joke_config.blacklist)){
+                    if(value){
+                        blacklisted_flags.push(key);
+                    }
+                }
+
+                if(blacklisted_flags.length > 0){
+                    url_str += "?blacklistFlags=";
+
+                    blacklisted_flags.forEach((e, index) => {
+                        url_str += e; 
+                        url_str += ((index != (blacklisted_flags.length - 1))? "," : "")
+                    });
+                }
+
+                if(joke_types.length < 2){
+                    if(blacklisted_flags.length > 0){
+                        url_str += `&type=${joke_types[0]}`;
+                    }
+                    else{
+                        url_str += `?type=${joke_types[0]}`;
+                    }
+                }
+
+                return url_str;
+            },
+            get_joke: () => {
+                const url_str = Bunny.eggs.clown.get_url_str();
+
+                (function(){
+                    const j = $.getJSON(url_str,{format: "json"})
+                        .done(function(joke){
+                            var jokeEggContainer = $("<div id=\"joke_egg_container\"></div>");
+
+                            if($(window).width() > 800){
+                                $('#colorHexStr').css('margin-top', '5vh');
+                                $('#colorHexStr').css('margin-bottom', '10vh');
+                            }
+                            else {
+                                $('#colorHexStr').css('margin-top', '2vh');
+                                $('#colorHexStr').css('margin-bottom', '5vh');
+                            }
+                            
+                            $('main').append(jokeEggContainer);
+
+                            if(joke.type === "single"){
+                                var joke_text = $('<text class="joke_egg"></text>');
+                                joke_text.text(`\"${joke.joke}\"`);
+                                $('#joke_egg_container').append(joke_text);
+                            }
+                            else if(joke.type === "twopart") {
+                                var joke_setup = $('<text class="joke_egg"></text>');
+                                var joke_delivery = $('<text class="joke_egg"></text>');
+
+                                joke_setup.text(`\"${joke.setup}\"`);
+                                joke_delivery.text(`\"${joke.delivery}\"`);
+
+                                $('#joke_egg_container').append(joke_setup, $('<br>'), joke_delivery);
+                            }
+                        })
+
+                    return j;
+                })()
+            },
+            remove_joke: () => {
+                $('#joke_egg_container').remove();
+                if($(window).width() > 800){
+                    $('#colorHexStr').css('margin-top', '10vh');
+                    $('#colorHexStr').css('margin-bottom', '0vh');
+                }
+                else{
+                    $('#colorHexStr').css('margin-top', '3vh');
+                    $('#colorHexStr').css('margin-bottom', '0vh');
+                }
+                
+            },
+            exec: () => {
+                Bunny.eggs.clown.get_joke();
+            },
+            undo: () => {
+                Bunny.eggs.clown.remove_joke();
+            }
         }
     },
     do_egg: (egg_str = Bunny.prev_egg) => {
