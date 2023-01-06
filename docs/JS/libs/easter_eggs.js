@@ -21,7 +21,7 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 }
             }
         */
-        "reverse": {
+        "sigi": {
             exec: () => {
                 $('header').css('color', '#ffffff');
                 $('#strInput').css('color', '#ffffff');
