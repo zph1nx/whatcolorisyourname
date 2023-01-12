@@ -72,6 +72,10 @@ $(document).ready(function() {
 
         if (Bunny.is_egg(strInputVal)) {
             Bunny.do_egg();
+        } else {
+            if (Bunny.prev_egg !== "") {
+                Bunny.undo_egg(Bunny.prev_egg);
+            }
         }
     })
 });

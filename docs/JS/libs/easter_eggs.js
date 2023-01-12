@@ -21,7 +21,7 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 }
             }
         */
-        "sigi": {
+        "^sigi$": {
             exec: () => {
                 $('header').css('color', '#ffffff');
                 $('#strInput').css('color', '#ffffff');
@@ -49,9 +49,9 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 $('html').css('background-color', '#ffffff');
                 $('body').css('background-color', '#ffffff');
                 $('#colorHexStr').text("#FFFFFF");
-            } 
+            }
         },
-        "clown": {
+        "^clown$": {
             joke_config: {
                 type: {
                     "single": true,
@@ -71,32 +71,31 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 const blacklisted_flags = [];
                 const joke_types = [];
 
-                for(const [key, value] of Object.entries(Bunny.eggs.clown.joke_config.type)){
-                    if(value){
+                for (const [key, value] of Object.entries(Bunny.eggs["^clown$"].joke_config.type)) {
+                    if (value) {
                         joke_types.push(key);
                     }
                 }
 
-                for(const [key, value] of Object.entries(Bunny.eggs.clown.joke_config.blacklist)){
-                    if(value){
+                for (const [key, value] of Object.entries(Bunny.eggs["^clown$"].joke_config.blacklist)) {
+                    if (value) {
                         blacklisted_flags.push(key);
                     }
                 }
 
-                if(blacklisted_flags.length > 0){
+                if (blacklisted_flags.length > 0) {
                     url_str += "?blacklistFlags=";
 
                     blacklisted_flags.forEach((e, index) => {
-                        url_str += e; 
-                        url_str += ((index != (blacklisted_flags.length - 1))? "," : "")
+                        url_str += e;
+                        url_str += ((index != (blacklisted_flags.length - 1)) ? "," : "")
                     });
                 }
 
-                if(joke_types.length < 2){
-                    if(blacklisted_flags.length > 0){
+                if (joke_types.length < 2) {
+                    if (blacklisted_flags.length > 0) {
                         url_str += `&type=${joke_types[0]}`;
-                    }
-                    else{
+                    } else {
                         url_str += `?type=${joke_types[0]}`;
                     }
                 }
@@ -104,30 +103,28 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 return url_str;
             },
             get_joke: () => {
-                const url_str = Bunny.eggs.clown.get_url_str();
+                const url_str = Bunny.eggs["^clown$"].get_url_str();
 
-                (function(){
-                    $.getJSON(url_str,{format: "json"})
-                        .done(function(joke){
+                (function() {
+                    $.getJSON(url_str, { format: "json" })
+                        .done(function(joke) {
                             var jokeEggContainer = $("<div id=\"joke_egg_container\"></div>");
 
-                            if($(window).width() > 800){
+                            if ($(window).width() > 800) {
                                 $('#colorHexStr').css('margin-top', '5vh');
                                 $('#colorHexStr').css('margin-bottom', '10vh');
-                            }
-                            else {
+                            } else {
                                 $('#colorHexStr').css('margin-top', '2vh');
                                 $('#colorHexStr').css('margin-bottom', '5vh');
                             }
-                            
+
                             $('main').append(jokeEggContainer);
 
-                            if(joke.type === "single"){
+                            if (joke.type === "single") {
                                 var joke_text = $('<text class="joke_egg"></text>');
                                 joke_text.text(`${joke.joke}`);
                                 $('#joke_egg_container').append(joke_text);
-                            }
-                            else if(joke.type === "twopart") {
+                            } else if (joke.type === "twopart") {
                                 var joke_setup = $('<text class="joke_egg"></text>');
                                 var joke_delivery = $('<text class="joke_egg"></text>');
 
@@ -141,33 +138,38 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
             },
             remove_joke: () => {
                 $('#joke_egg_container').remove();
-                if($(window).width() > 800){
+                if ($(window).width() > 800) {
                     $('#colorHexStr').css('margin-top', '10vh');
                     $('#colorHexStr').css('margin-bottom', '0vh');
-                }
-                else{
+                } else {
                     $('#colorHexStr').css('margin-top', '3vh');
                     $('#colorHexStr').css('margin-bottom', '0vh');
                 }
-                
+
             },
             exec: () => {
-                Bunny.eggs.clown.get_joke();
+                Bunny.eggs["^clown$"].get_joke();
             },
             undo: () => {
-                Bunny.eggs.clown.remove_joke();
+                Bunny.eggs["^clown$"].remove_joke();
             }
+        },
+        "^.*(police|cop(s){0,1}|polizei|polizist(en|in|innen){0,1}|bulle(n){0,1}|acab|1312)(\s.*)*$": {
+            exec: () => {
+                $('#colorHexStr').text('#1312');
+            },
+            undo: () => {}
         }
     },
     do_egg: (egg_str = Bunny.prev_egg) => {
-        if(!Bunny.egg_executed){
+        if (!Bunny.egg_executed) {
             const egg_obj = Bunny.eggs[egg_str];
             egg_obj.exec();
             Bunny.egg_executed = true;
         }
     },
     undo_egg: (egg_str) => {
-        if(Bunny.egg_executed){
+        if (Bunny.egg_executed) {
             const egg_obj = Bunny.eggs[egg_str];
             egg_obj.undo();
         }
@@ -176,17 +178,26 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
     },
     is_egg: (str) => {
         str = str.toLowerCase();
-        const str_is_egg = Bunny.eggs.hasOwnProperty(str);
+        var str_is_egg = false;
 
-        if(str_is_egg){
-            if(str !== Bunny.prev_egg && Bunny.prev_egg !== ""){
+        for (const [key, value] of Object.entries(Bunny.eggs)) {
+            const rgx = new RegExp(key);
+
+            if (str.match(rgx)) {
+                str = key;
+                str_is_egg = true;
+                break;
+            }
+        }
+
+        if (str_is_egg) {
+            if (str !== Bunny.prev_egg && Bunny.prev_egg !== "") {
                 Bunny.undo_egg(Bunny.prev_egg);
             }
 
             Bunny.remember_egg(str);
-        }
-        else {
-            if(Bunny.prev_egg !== ""){
+        } else {
+            if (Bunny.prev_egg !== "") {
                 Bunny.undo_egg(Bunny.prev_egg);
             }
         }
