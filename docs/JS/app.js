@@ -1,55 +1,41 @@
-$(document).ready(function() {
-    const Colors = {
-        "a": [255, 229, 0],  // *
-        "b": [255, 153, 51],
-        "c": [255, 255, 51],
-        "d": [247, 170, 19],
-        "e": [240, 125, 0],  // *
-        "f": [51, 255, 153],
-        "g": [51, 255, 255],
-        "h": [249, 213, 6],
-        "i": [228, 6, 19],   // *
-        "j": [232, 78, 14],  // *
-        "k": [255, 51, 255],
-        "l": [111, 34, 130], // *
-        "m": [0, 150, 63],   // *
-        "n": [0, 122, 195],  // *
-        "o": [1, 155, 165],  // *
-        "p": [153, 221, 51],
-        "q": [51, 221, 51],
-        "r": [200, 5, 127],  // *
-        "s": [0, 79, 158],   // *
-        "t": [151, 193, 31], // *
-        "u": [251, 187, 0],  // *
-        "v": [153, 51, 221],
-        "w": [221, 51, 221],
-        "x": [221, 51, 153],
-        "y": [187, 51, 51],
-        "z": [187, 153, 51]
-    };
+//const siteUrl = `${window.location.href}`;
 
+const siteUrl = 'http://127.0.0.1:5500/docs'
+const colorsJsonUrl = `${siteUrl}/data/colors.data.json`
+const Colors = {};
+
+$.getJSON(colorsJsonUrl, { format: 'json' }).done((colorsJSON) => {
     // redefining the Char-Color Property Value as Color Object from RGB-Array (the previous value)
-    for (const [key, value] of Object.entries(Colors)) {
+    for (const [key, value] of Object.entries(colorsJSON.chars)) {
         // pushing a 1 to the end of the RGB-Array, to set the alpha-channel as 100%
-        value.push(1);
-        Colors[key] = $.Color(value);
+        value.color.push(1);
+
+        const color_amp_arr = [];
+        const rgbaColor = $.Color(value.color);
+
+        for (let i = 0; i < colorsJSON.priorityCount[value.priority.toString()]; i++) {
+            color_amp_arr.push(rgbaColor);
+        }
+
+        Colors[key] = color_amp_arr;
     }
+})
 
 
+$(document).ready(function() {
     // Function to get the HEX-String of the input string
     // @PARAMETER   str         string  "the string thats currently inputted"
     // @RETURN      color_hex   string  "the computed Hex-String of all Char-Colors mixed"
     function getStringColor(str) {
-        const color_arr = [];
-
+        var color_arr = [];
         for (let c of str) {
             if (Colors.hasOwnProperty(c)) {
-                color_arr.push(Colors[c]);
+                color_arr = color_arr.concat(Colors[c]);
             }
         }
 
-        if(color_arr.length <= 0){
-            color_arr.push($.Color([255,255,255,1]));
+        if (color_arr.length <= 0) {
+            color_arr.push($.Color([255, 255, 255, 1]));
         }
 
         const color = Color_mixer.mix(color_arr);
@@ -61,16 +47,13 @@ $(document).ready(function() {
     // Eventlistener for the string input Field, triggers on input
     $('#strInput').on('input', function() {
         const strInputVal = $('#strInput').val();
+        const strColor = (strInputVal.length > 0 ? getStringColor(strInputVal.toLowerCase()) : '#ffffff');
 
-        if(Bunny.is_egg(strInputVal)){
+        $('body').css('background-color', strColor);
+        $('#colorHexStr').text(strColor.toUpperCase());
+
+        if (Bunny.is_egg(strInputVal)) {
             Bunny.do_egg();
         }
-        else{
-            const strColor = (strInputVal.length > 0 ? getStringColor(strInputVal.toLowerCase()) : '#ffffff');
-
-            $('body').css('background-color', strColor);
-            $('#colorHexStr').text(strColor.toUpperCase());
-        }
-        
     })
 });
