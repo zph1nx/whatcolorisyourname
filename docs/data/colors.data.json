@@ -1,10 +1,6 @@
 {
-    "priorityCount": {
-        "1": 8,
-        "2": 4,
-        "3": 2,
-        "4": 1
-    },
+    "ampHp": 0,
+    "priorityLayers": 4,
     "chars": {
         "a": {
             "priority": 1,

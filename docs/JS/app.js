@@ -1,9 +1,28 @@
-const siteUrl = `${window.location.href}`;
-//const siteUrl = 'http://127.0.0.1:5500/docs' // --> for dev
+const siteUrl = ((`${window.location.href}`.match(/^http(s)?\:\/\/(localhost|127\.0\.0\.1).*$/)) ? 'http://127.0.0.1:5500/docs' : `${window.location.href}`);
 const colorsJsonUrl = `${siteUrl}/data/colors.data.json`;
 const Colors = {};
 
+
+function set_color_amp(hpVal, layers) {
+
+
+    return pAmp;
+}
+
+
 $.getJSON(colorsJsonUrl, { format: 'json' }).done((colorsJSON) => {
+    const colorAmp = {};
+
+    if (colorsJSON.ampHp == colorsJSON.priorityLayers) {
+        for (i = 1, val = colorsJSON.ampHp; i <= colorsJSON.priorityLayers; i++, val--) {
+            colorAmp[i.toString()] = val;
+        }
+    } else {
+        for (i = 1, prev_val = (colorsJSON.ampHp == 0 || colorsJSON.ampHp < colorsJSON.priorityLayers ? (colorsJSON.priorityLayers * 2) : colorsJSON.ampHp); i <= colorsJSON.priorityLayers; i++, prev_val = (prev_val > 1 ? Math.floor(prev_val / 2) : 1)) {
+            colorAmp[i.toString()] = prev_val;
+        }
+    }
+
     // redefining the Char-Color Property Value as Color Object from RGB-Array (the previous value)
     for (const [key, value] of Object.entries(colorsJSON.chars)) {
         // pushing a 1 to the end of the RGB-Array, to set the alpha-channel as 100%
@@ -12,7 +31,7 @@ $.getJSON(colorsJsonUrl, { format: 'json' }).done((colorsJSON) => {
         const color_amp_arr = [];
         const rgbaColor = $.Color(value.color);
 
-        for (let i = 0; i < colorsJSON.priorityCount[value.priority.toString()]; i++) {
+        for (let i = 0; i < colorAmp[value.priority.toString()]; i++) {
             color_amp_arr.push(rgbaColor);
         }
 
