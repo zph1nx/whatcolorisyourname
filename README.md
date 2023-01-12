@@ -1,6 +1,6 @@
 # whatcolorisyourname
 
-> [**Website**](https://slowloris-coding.github.io/whatcolorisyourname/)
+> [**Website**](http://www.slowloris.io)
 
 ## table of contents
 - [About](#about)
