@@ -154,7 +154,7 @@ const Bunny = { // "Bunny" b.c. the Easter Bunny is the Easter-Egg Manager (XD)
                 Bunny.eggs["^clown$"].remove_joke();
             }
         },
-        "^.*(police|cop(s){0,1}|polizei|polizist(en|in|innen){0,1}|bulle(n){0,1}|acab|1312)(\s.*)*$": {
+        "^.*(police|cop|cops|polizei|polizist(en|in|innen){0,1}|bulle|bulle\\n|acab|1312)(\s.*)*$": {
             exec: () => {
                 $('#colorHexStr').text('#1312');
             },
