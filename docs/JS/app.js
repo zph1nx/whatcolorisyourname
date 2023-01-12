@@ -1,6 +1,6 @@
 const siteUrl = `${window.location.href}`;
 //const siteUrl = 'http://127.0.0.1:5500/docs' // --> for dev
-const colorsJsonUrl = `${siteUrl}/data/colors.data.json`
+const colorsJsonUrl = `${siteUrl}/data/colors.data.json`;
 const Colors = {};
 
 $.getJSON(colorsJsonUrl, { format: 'json' }).done((colorsJSON) => {
